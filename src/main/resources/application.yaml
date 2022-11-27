@@ -1,0 +1,51 @@
+logging:
+  file:
+    name: ./logs/rest-demo.log
+  level:
+    com.fajarconsultant.restdemo:
+      controller: debug
+    root: info
+
+spring:
+  datasource:
+    username: webuser
+    password: webuser
+    url: jdbc:mariadb://localhost:3306/crud_test
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      minimum-idle: 5
+      idle-timeout: 300000
+      max-lifetime: 1800000
+      maximum-pool-size: 50
+  mvc:
+    contentnegotiation:
+      favor-parameter: false
+  cache:
+    jcache:
+      provider: org.ehcache.jsr107.EhcacheCachingProvider
+      config: classpath:ehcache.xml
+  jpa:
+    database: MYSQL
+    database-platform: org.hibernate.dialect.MariaDBDialect
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+        cache:
+          use_second_level_cache: true
+          use_query_cache: true
+          region:
+            factory_class: jcache
+        hbm2ddl:
+          auto: update
+        max_fetch_depth: 3
+
+server:
+  servlet:
+    context-path: /rest-demo
+  tomcat:
+    accesslog:
+      enabled: true
+      max-days: 7
